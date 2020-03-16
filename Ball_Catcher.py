@@ -44,6 +44,7 @@ def reset():
 	ready(basket,0,-260)
 	ready(basket2,-20,-260)
 	ready(basket3,20,-260)
+	score=0
 reset()
 
 
@@ -107,7 +108,6 @@ wn.listen()
 #wn.onkeypress(go_up, "Up")
 wn.onkeypress(go_right, "Right")
 wn.onkeypress(go_left, "Left")
-
 start=1
 def music():
 	pygame.mixer.music.load("Music.mp3")
@@ -118,9 +118,26 @@ def hit():
 def bombped():
 	pygame.mixer.music.load("red.mp3")
 	pygame.mixer.music.play()
+def newball():
+		x = random.randint(-270, 270)
+		y = random.randint(-270, 270)
+		x1 = random.randint(-270, 270)
+		y1 = random.randint(-270, 270)
+		ball.goto(x,270)
+		bomb.goto(x1,270)
+
+
+
+
 
 while True:
 	wn.update()
+	def changecolor():
+		if(wn.bgcolor()=="black"):
+			wn.bgcolor("white")
+			t=0
+		else:
+			wn.bgcolor("black")
 	if(start==1):
 		music()
 		start=0
@@ -138,15 +155,15 @@ while True:
 		reset()
 		gameover()
 		music()
-	if (basket.distance(ball) < 20 or basket2.distance(ball) < 20 or basket3.distance(ball) < 20 or ball.ycor()<-290):
-		x = random.randint(-270, 270)
-		y = random.randint(-270, 270)
-		x1 = random.randint(-270, 270)
-		y1 = random.randint(-270, 270)
-		ball.goto(x,270)
-		bomb.goto(x1,270)
+	if  ball.ycor()<-290:
+		newball()
+	if (basket.distance(ball) < 20 or basket2.distance(ball) < 20 or basket3.distance(ball) < 20):
 		delay -= 0.001
 		score += 10
+		newball()
+		if score % 30 ==0 :
+			print(score)
+			changecolor()
 		if score > high_score:
 			high_score = score
 		pen.clear()
