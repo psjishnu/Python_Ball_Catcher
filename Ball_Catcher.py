@@ -5,19 +5,19 @@ import pygame
 import itertools
 import threading
 import sys
+done=0
 def animate():
     for c in itertools.cycle(['|', '/', '-', '\\']):
-        if done:
+        if done==1 :
             break
         sys.stdout.write('\rloading ' + c)
         sys.stdout.flush()
         time.sleep(0.1)
-
+done=1
 t = threading.Thread(target=animate)
 t.start()
 
 time.sleep(3)
-done = True
 pygame.mixer.init()
 
 delay = 0.1  
@@ -87,7 +87,6 @@ def move():
 	ball.sety(f11-20)
 	bomb.sety(f12-20)
 	if basket.direction == "left":
-		print("ss")
 		x = basket.xcor()
 		x11=basket2.xcor()
 		x21=basket3.xcor()
@@ -96,7 +95,6 @@ def move():
 		basket3.setx(x21-20)
 
 	if basket.direction == "right":
-		print("hd")
 		x = basket.xcor()
 		x12=basket2.xcor()
 		x22=basket3.xcor()
